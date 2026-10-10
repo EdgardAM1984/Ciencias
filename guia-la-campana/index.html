@@ -1,0 +1,670 @@
+<title>Guía de Campo La Campana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,500;0,700;0,800;1,500&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: cuaderno de terreno en una columna de lectura, con fichas de especie en grilla y láminas SVG a ancho completo */
+:root{
+  --bg:#f3f1ea;          /* papel de libreta */
+  --paper:#fbfaf6;
+  --ink:#1f2a24;         /* tinta verde-negra */
+  --muted:#5b6660;
+  --line:#d6d3c6;
+  --palm:#2f5a3f;        /* verde palmar */
+  --palm-soft:#e3ebe2;
+  --granite:#b8a79c;     /* granodiorita rosada */
+  --granite-dark:#7d6b60;
+  --puya:#1f8f8a;        /* turquesa chagual */
+  --ochre:#b7791f;       /* ladera soleada */
+  --ochre-soft:#f5e9d2;
+  --alert:#a3402c;
+  --alert-soft:#f6e3dc;
+  --svg-sky:#e9efe9;
+  --f-display:"Alegreya",Georgia,"Times New Roman",serif;
+  --f-body:"Alegreya Sans","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --f-data:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141a16;--paper:#1b231e;--ink:#e6ebe4;--muted:#a3ada6;--line:#33403a;
+  --palm:#86c29a;--palm-soft:#22352a;--granite:#9b8a80;--granite-dark:#c9b6aa;
+  --puya:#5cc9c2;--ochre:#e0a64e;--ochre-soft:#33291a;--alert:#ec8a73;--alert-soft:#3a221c;--svg-sky:#1e2a24;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141a16;--paper:#1b231e;--ink:#e6ebe4;--muted:#a3ada6;--line:#33403a;
+  --palm:#86c29a;--palm-soft:#22352a;--granite:#9b8a80;--granite-dark:#c9b6aa;
+  --puya:#5cc9c2;--ochre:#e0a64e;--ochre-soft:#33291a;--alert:#ec8a73;--alert-soft:#3a221c;--svg-sky:#1e2a24;
+  color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55}
+.wrap{max-width:980px;margin:0 auto;padding-inline:16px;padding-block:24px 64px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(2rem,5.5vw,3.3rem);font-weight:800;letter-spacing:-.01em}
+h2{font-size:clamp(1.5rem,3.6vw,2rem);font-weight:700;color:var(--palm)}
+h3{font-size:1.2rem;font-weight:700}
+p{margin:0;max-width:68ch}
+em,i{font-style:italic}
+.sci{font-style:italic}
+.eyebrow{font-family:var(--f-data);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.mono{font-family:var(--f-data);font-variant-numeric:tabular-nums}
+section{display:grid;gap:18px;padding-block:36px;border-top:1px solid var(--line)}
+section > header{display:grid;gap:6px}
+.stack{display:grid;gap:12px}
+a{color:var(--puya)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--puya);outline-offset:2px}
+
+/* hero */
+.hero{display:grid;gap:16px;padding-bottom:24px}
+.hero .sub{font-size:1.15rem;color:var(--muted);max-width:60ch}
+.plate{background:var(--paper);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.plate svg{display:block;width:100%;height:auto}
+.plate figcaption{padding:8px 12px;font-size:.85rem;color:var(--muted);border-top:1px solid var(--line)}
+figure{margin:0}
+
+/* ficha rápida */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.facts > div{background:var(--paper);padding:12px 14px;display:grid;gap:2px;min-width:0}
+.facts b{font-family:var(--f-data);font-weight:500;font-size:.98rem}
+.facts span{font-size:.85rem;color:var(--muted)}
+
+/* itinerario */
+.timeline{display:grid;gap:0;border-left:2px solid var(--palm);margin-left:6px}
+.timeline > div{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:10px 0 10px 16px;position:relative}
+.timeline > div::before{content:"";position:absolute;left:-7px;top:16px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--palm)}
+.timeline .t{font-family:var(--f-data);font-size:.9rem;color:var(--palm);padding-top:2px}
+.timeline .d{min-width:0}
+
+.callout{background:var(--ochre-soft);border:1px solid color-mix(in srgb,var(--ochre) 40%,transparent);border-radius:6px;padding:14px 16px;display:grid;gap:6px}
+.callout.alert{background:var(--alert-soft);border-color:color-mix(in srgb,var(--alert) 40%,transparent)}
+.callout.alert h3{color:var(--alert)}
+.callout.green{background:var(--palm-soft);border-color:color-mix(in srgb,var(--palm) 35%,transparent)}
+.callout ul{margin:0;padding-left:20px;display:grid;gap:4px}
+
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.two > *{min-width:0}
+
+/* geocronología */
+.geo-list{display:grid;gap:10px}
+.geo{display:grid;grid-template-columns:110px 1fr;gap:14px;padding:12px 0;border-bottom:1px dashed var(--line)}
+.geo:last-child{border-bottom:0}
+.geo .age{font-family:var(--f-data);font-size:.85rem;color:var(--granite-dark)}
+.geo .age strong{display:block;font-size:1rem;color:var(--ink);font-weight:500}
+.geo > div{min-width:0}
+
+/* fichas especie */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:6px;display:grid;grid-template-rows:auto 1fr;overflow:hidden;min-width:0}
+.card svg{display:block;width:100%;height:auto;background:var(--svg-sky);border-bottom:1px solid var(--line)}
+.card .body{padding:12px 14px 14px;display:grid;gap:6px;align-content:start}
+.card .name{font-family:var(--f-display);font-size:1.15rem;font-weight:700;font-style:italic}
+.card .common{font-size:.92rem;color:var(--muted)}
+.card ul{margin:0;padding-left:18px;font-size:.95rem;display:grid;gap:3px}
+.tag{display:inline-block;font-family:var(--f-data);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:3px;border:1px solid var(--line);color:var(--muted);justify-self:start}
+.tag.sun{color:var(--ochre);border-color:var(--ochre)}
+.tag.shade{color:var(--puya);border-color:var(--puya)}
+.tag.cons{color:var(--alert);border-color:var(--alert)}
+
+/* tablas */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--paper)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.93rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-data);font-weight:500;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--palm-soft)}
+tr:last-child td{border-bottom:0}
+
+/* checklist */
+.check{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:4px 16px}
+.check label{display:flex;gap:8px;align-items:flex-start;padding:5px 0;cursor:pointer;min-width:0}
+.check input{margin-top:5px;accent-color:var(--palm);flex:none}
+.check .grp{grid-column:1/-1;margin-top:10px}
+.counter{font-family:var(--f-data);font-size:.9rem;color:var(--palm)}
+button.reset{font:inherit;font-size:.85rem;background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:4px 10px;cursor:pointer;justify-self:start}
+
+.fix{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;align-items:start}
+.fix .k{font-family:var(--f-data);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:3px;background:var(--alert-soft);color:var(--alert);white-space:nowrap}
+.fix .k.ok{background:var(--palm-soft);color:var(--palm)}
+.fix > div{min-width:0}
+
+footer{border-top:1px solid var(--line);padding-top:20px;font-size:.88rem;color:var(--muted);display:grid;gap:8px}
+
+@media (max-width:520px){
+  .timeline > div{grid-template-columns:1fr;gap:2px}
+  .geo{grid-template-columns:1fr;gap:4px}
+  body{font-size:16px}
+}
+@media (prefers-reduced-motion:no-preference){ .card{transition:transform .15s ease} .card:hover{transform:translateY(-2px)} }
+@media print{ section{break-inside:auto} .card,.callout,figure,.geo{break-inside:avoid} button.reset{display:none} body{font-size:13px} }
+</style>
+
+<div class="wrap">
+
+<!-- ============ PORTADA ============ -->
+<div class="hero">
+  <div class="eyebrow">Cuaderno de terreno · Primavera · Sábado 11 de octubre de 2026</div>
+  <h1>Guía de Campo La Campana</h1>
+  <p class="sub">Sector Ocoa y Sendero La Cascada. Geología, historia y biodiversidad para una jornada de observación de un día, del palmar soleado a la quebrada húmeda.</p>
+
+  <figure class="plate">
+    <svg viewBox="0 0 960 360" role="img" aria-label="Ilustración del valle de Ocoa con palmas chilenas, chaguales en flor y el Cerro La Campana al fondo">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfe0e6"/><stop offset="1" stop-color="#f1ead8"/></linearGradient>
+        <linearGradient id="far" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8f9aa6"/><stop offset="1" stop-color="#a9b0a8"/></linearGradient>
+      </defs>
+      <rect width="960" height="360" fill="url(#sky)"/>
+      <!-- Andes nevados lejanos -->
+      <path d="M0 170 L80 150 L140 162 L210 128 L260 150 L330 120 L400 146 L470 132 L520 150 L560 140 L600 160 L960 160 L960 200 L0 200Z" fill="#c4ccd3"/>
+      <path d="M200 132 L210 128 L222 136 Z M322 124 L330 120 L340 128Z M462 135 L470 132 L480 138Z" fill="#fff"/>
+      <!-- macizo La Campana (granodiorita) -->
+      <path d="M380 260 L520 150 L560 112 L585 92 L600 84 L618 92 L640 112 L700 150 L800 205 L960 230 L960 300 L380 300Z" fill="url(#far)"/>
+      <path d="M585 92 L600 84 L618 92 L610 120 L596 140 L590 118Z" fill="#b6a49a" opacity=".85"/>
+      <text x="600" y="72" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#3a4a42">Cerro La Campana ~1.880 m</text>
+      <!-- lomas medias -->
+      <path d="M0 250 Q160 190 320 230 T640 240 T960 250 L960 320 L0 320Z" fill="#7d9a76"/>
+      <path d="M0 290 Q200 250 420 285 T960 280 L960 360 L0 360Z" fill="#a7a06a"/>
+      <!-- palmas Jubaea -->
+      <g fill="#5d5a52">
+        <path d="M120 330 C118 290 122 250 126 214 L136 214 C140 250 142 290 140 330Z"/>
+        <path d="M250 340 C248 300 250 268 254 236 L263 236 C266 268 268 300 266 340Z"/>
+        <path d="M800 335 C798 300 800 262 805 226 L815 226 C819 262 822 300 820 335Z"/>
+        <path d="M880 342 C879 310 881 284 884 258 L891 258 C894 284 896 310 894 342Z"/>
+      </g>
+      <g stroke="#2f5a3f" stroke-width="5" fill="none" stroke-linecap="round">
+        <path d="M131 214 q-30 -10 -58 8 M131 214 q-26 -28 -54 -24 M131 214 q-4 -34 -20 -48 M131 214 q14 -34 36 -44 M131 214 q34 -18 60 -6 M131 214 q30 4 52 26 M131 214 q-24 6 -44 30"/>
+        <path d="M258 236 q-26 -8 -48 8 M258 236 q-22 -24 -46 -20 M258 236 q0 -30 -14 -42 M258 236 q14 -28 32 -36 M258 236 q28 -14 50 -4 M258 236 q24 6 42 24"/>
+        <path d="M810 226 q-26 -8 -50 8 M810 226 q-22 -26 -48 -22 M810 226 q0 -30 -14 -44 M810 226 q14 -30 34 -38 M810 226 q30 -14 52 -2 M810 226 q26 6 44 26"/>
+        <path d="M887 258 q-20 -6 -38 6 M887 258 q-16 -20 -36 -16 M887 258 q2 -24 -8 -34 M887 258 q12 -22 28 -28 M887 258 q22 -10 40 0"/>
+      </g>
+      <!-- chaguales en flor -->
+      <g>
+        <path d="M430 345 l-22 -18 M430 345 l-8 -26 M430 345 l10 -24 M430 345 l24 -14" stroke="#7f8f6a" stroke-width="5" stroke-linecap="round"/>
+        <rect x="428" y="230" width="4" height="110" fill="#6b6a4b"/>
+        <g fill="#1f8f8a"><circle cx="425" cy="246" r="5"/><circle cx="436" cy="256" r="5"/><circle cx="424" cy="268" r="5"/><circle cx="437" cy="280" r="5"/><circle cx="425" cy="292" r="5"/><circle cx="436" cy="304" r="5"/></g>
+        <path d="M560 350 l-18 -14 M560 350 l-6 -22 M560 350 l9 -20 M560 350 l20 -12" stroke="#7f8f6a" stroke-width="5" stroke-linecap="round"/>
+        <rect x="558" y="262" width="4" height="84" fill="#6b6a4b"/>
+        <g fill="#1f8f8a"><circle cx="554" cy="276" r="4.5"/><circle cx="565" cy="286" r="4.5"/><circle cx="554" cy="296" r="4.5"/><circle cx="565" cy="306" r="4.5"/><circle cx="555" cy="316" r="4.5"/></g>
+      </g>
+      <!-- picaflor gigante sobre la vara -->
+      <g transform="translate(446 236)"><ellipse cx="0" cy="0" rx="9" ry="5" fill="#6c5a3f"/><path d="M-8 -2 l-16 -2" stroke="#3a3a3a" stroke-width="1.6"/><path d="M2 -3 q8 -16 18 -12 q-6 8 -14 14z" fill="#8a7a5e"/><path d="M8 1 l10 4" stroke="#6c5a3f" stroke-width="3"/></g>
+    </svg>
+    <figcaption>Lámina 1. Ladera norte de Ocoa: palmar de <i>Jubaea chilensis</i>, chaguales azules (<i>Puya berteroniana</i>) y el domo de granodiorita del Cerro La Campana. Ilustración esquemática.</figcaption>
+  </figure>
+
+  <div class="facts">
+    <div><span>Ubicación</span><b>32°55′S · 71°05′O</b><span>Sector Ocoa, comuna de Hijuelas</span></div>
+    <div><span>Ecosistema</span><b>Bosque esclerófilo y palmar</b><span>Clima mediterráneo, lluvias en invierno</span></div>
+    <div><span>Pronóstico 11-oct (ECMWF)</span><b>11 – 18 °C · 0,2 mm</b><span>Viento O, ráfagas ~40 km/h</span></div>
+    <div><span>Desnivel del sendero (según PDF)</span><b>350 → 650 m</b><span>Entrada Ocoa → quebrada / cascada</span></div>
+  </div>
+</div>
+
+<!-- ============ PLAN DEL DÍA ============ -->
+<section id="plan">
+  <header><div class="eyebrow">Sección 1</div><h2>Plan de la jornada</h2></header>
+  <p>El orden del recorrido sigue la recomendación de la guía original. La mañana fresca es para la ladera expuesta, cuando los reptiles se asolean y las aves visitan las puyas. Las horas de más calor son para la quebrada en sombra.</p>
+  <div class="timeline">
+    <div><div class="t">08:30</div><div class="d"><b>Entrada Ocoa (≈350 m). Zona 1, matorral esclerófilo seco.</b> Registro en guardería CONAF. Mirar espinos, quiscos y litres. Primera estación geológica: bloques de ocoíta en el camino (ver Sección 3).</div></div>
+    <div><div class="t">08:45–11:00</div><div class="d"><b>Ladera norte, Zona 2: palmar y chagualal.</b> Conteo de <i>Patagona gigas</i> en varas de <i>Puya</i>. Lagartijas sobre rocas (<i>Liolaemus</i>). Con binoculares, revise las puntas estériles de las varas, que sirven de posadero.</div></div>
+    <div><div class="t">11:00–11:30</div><div class="d"><b>Transición al bosque de peumo.</b> Busque <i>Tropaeolum azureum</i> trepando sobre litres y peumos. Desde las 11:00 vuela <i>Castnia eudesmia</i> alrededor de las puyas.</div></div>
+    <div><div class="t">11:30–14:30</div><div class="d"><b>Quebrada umbrosa, Zona 3 (≈650 m), y la cascada.</b> Criptógamas en roca rezumante: <i>Marchantia</i>, <i>Adiantum</i>, musgos en cojín. Almuerzo a la sombra. Use lupa de 10× y no extraiga material.</div></div>
+    <div><div class="t">14:30–16:30</div><div class="d"><b>Regreso por el mismo sendero.</b> Con el sol de la tarde, revise de nuevo los bordes del matorral. Al final del día aumenta la probabilidad de ver zorros en el sendero.</div></div>
+  </div>
+  <div class="callout">
+    <h3>Tiempo para mañana</h3>
+    <p>El modelo ECMWF (corrida 10-oct 06 UTC) da para el sábado 11 una mínima de 11 °C y una máxima de 18 °C, prácticamente sin lluvia (0,2 mm), viento del oeste con ráfagas cercanas a 21 nudos y algo de inestabilidad por la tarde. El domingo 12 sube la probabilidad de lluvia (5,5 mm). Lleve una capa cortavientos. El día fresco favorece la caminata, pero con menos calor los reptiles pueden salir más tarde a asolearse.</p>
+  </div>
+</section>
+
+<!-- ============ PERFIL ============ -->
+<section id="perfil">
+  <header><div class="eyebrow">Sección 2</div><h2>Zonación altitudinal del Sendero La Cascada</h2></header>
+  <figure class="plate">
+    <svg viewBox="0 0 960 330" role="img" aria-label="Perfil esquemático del sendero desde 350 m hasta 650 m con tres zonas de vegetación">
+      <rect style="fill:var(--svg-sky)" width="960" height="330"/>
+      <g style="fill:var(--muted)" font-family="IBM Plex Mono,monospace" font-size="12">
+        <line style="stroke:var(--line)" x1="70" y1="270" x2="920" y2="270"/>
+        <line style="stroke:var(--line)" x1="70" y1="200" x2="920" y2="200" stroke-dasharray="3 5"/>
+        <line style="stroke:var(--line)" x1="70" y1="130" x2="920" y2="130" stroke-dasharray="3 5"/>
+        <line style="stroke:var(--line)" x1="70" y1="60" x2="920" y2="60" stroke-dasharray="3 5"/>
+        <text x="62" y="274" text-anchor="end">350 m</text>
+        <text x="62" y="204" text-anchor="end">450 m</text>
+        <text x="62" y="134" text-anchor="end">550 m</text>
+        <text x="62" y="64" text-anchor="end">650 m</text>
+      </g>
+      <!-- terreno -->
+      <path d="M70 270 C180 266 240 250 330 222 C420 194 500 160 580 130 C650 104 720 84 780 66 L820 60 L860 62 L920 60 L920 300 L70 300Z" fill="#c9b78f" opacity=".55"/>
+      <path style="stroke:var(--ink)" d="M70 270 C180 266 240 250 330 222 C420 194 500 160 580 130 C650 104 720 84 780 66 L820 60 L860 62 L920 60" fill="none" stroke-width="2.5"/>
+      <!-- bandas -->
+      <rect style="fill:var(--ochre)" x="70" y="282" width="230" height="10"/>
+      <rect x="300" y="282" width="420" height="10" fill="#7d9a76"/>
+      <rect style="fill:var(--puya)" x="720" y="282" width="200" height="10"/>
+      <!-- cascada -->
+      <path style="stroke:var(--puya)" d="M842 62 C846 100 838 130 846 170" stroke-width="4" stroke-dasharray="6 6" fill="none"/>
+      <!-- iconos -->
+      <g fill="#5d5a52"><rect x="420" y="160" width="6" height="34"/><rect x="520" y="128" width="6" height="34"/></g>
+      <g stroke="#2f5a3f" stroke-width="3" fill="none" stroke-linecap="round"><path d="M423 160 q-16 -6 -28 4 M423 160 q-6 -18 -18 -22 M423 160 q8 -18 22 -20 M423 160 q18 -4 28 8"/><path d="M523 128 q-16 -6 -28 4 M523 128 q-6 -18 -18 -22 M523 128 q8 -18 22 -20 M523 128 q18 -4 28 8"/></g>
+      <g><rect x="470" y="128" width="3" height="40" fill="#6b6a4b"/><g style="fill:var(--puya)"><circle cx="468" cy="134" r="3.5"/><circle cx="475" cy="142" r="3.5"/><circle cx="468" cy="150" r="3.5"/><circle cx="475" cy="158" r="3.5"/></g></g>
+      <g style="fill:var(--ink)" font-family="Alegreya Sans,sans-serif">
+        <text x="84" y="240" font-size="15" font-weight="700">Zona 1 · Entrada Ocoa</text>
+        <text style="fill:var(--muted)" x="84" y="257" font-size="13">Matorral esclerófilo seco, espinal</text>
+        <text x="330" y="112" font-size="15" font-weight="700">Zona 2 · Ladera de exposición norte</text>
+        <text style="fill:var(--muted)" x="330" y="129" font-size="13">Palmar (Jubaea) y chagualal (Puya)</text>
+        <text x="610" y="38" font-size="15" font-weight="700">Zona 3 · Quebrada umbrosa</text>
+        <text style="fill:var(--muted)" x="610" y="54" font-size="13">Peumo, helechos, musgos, hepáticas</text>
+        <text style="fill:var(--puya)" x="856" y="150" font-size="13">cascada</text>
+      </g>
+      <g style="fill:var(--muted)" font-family="IBM Plex Mono,monospace" font-size="11">
+        <text x="70" y="315">xérico · sol directo</text>
+        <text x="920" y="315" text-anchor="end">hígrofilo · sombra</text>
+      </g>
+    </svg>
+    <figcaption>Lámina 2. Perfil esquemático. Las cotas vienen de la guía original y la distancia horizontal no está a escala.</figcaption>
+  </figure>
+  <div class="two">
+    <div class="callout"><h3>Ladera norte: sol y sequía</h3>
+      <ul><li>Radiación directa intensa y suelos esqueléticos de roca meteorizada.</li><li>Dominantes: <i>Jubaea chilensis</i>, <i>Puya berteroniana</i>, <i>Lithrea caustica</i>.</li><li>En octubre florecen los chaguales y hay muchos polinizadores.</li></ul></div>
+    <div class="callout green"><h3>Fondo de quebrada: sombra y humedad</h3>
+      <ul><li>Sombra continua, alta humedad relativa y escurrimiento.</li><li>Dominantes: <i>Cryptocarya alba</i>, <i>Adiantum</i>, <i>Marchantia</i>.</li><li>En octubre esporulan los helechos y las hepáticas forman sus estructuras sexuales.</li></ul></div>
+  </div>
+</section>
+
+<!-- ============ GEOLOGÍA ============ -->
+<section id="geologia">
+  <header><div class="eyebrow">Sección 3</div><h2>Historia geológica: de arco volcánico a cordillera</h2></header>
+  <p>La Campana pertenece a la Cordillera de la Costa de Chile central. Sus rocas registran unos 150 millones de años de subducción en el margen occidental de Sudamérica. A grandes rasgos hay tres capítulos: un arco volcánico del Cretácico Inferior, la intrusión de un cuerpo granítico en el Cretácico Superior y, desde entonces, alzamiento y erosión.</p>
+
+  <figure class="plate">
+    <svg viewBox="0 0 960 340" role="img" aria-label="Corte geológico esquemático oeste-este de la Cordillera de la Costa en La Campana">
+      <rect style="fill:var(--svg-sky)" width="960" height="340"/>
+      <!-- capas volcánicas inclinadas al este -->
+      <clipPath id="land"><path d="M0 250 L120 230 L240 200 L360 170 L460 120 L520 74 L560 60 L600 76 L680 130 L780 170 L960 190 L960 340 L0 340Z"/></clipPath>
+      <g clip-path="url(#land)">
+        <rect width="960" height="340" fill="#cdb79a"/>
+        <path d="M0 120 L960 300 L960 340 L0 340Z" fill="#8a8f7a"/>
+        <path d="M0 40 L960 220 L960 300 L0 120Z" fill="#a47e66"/>
+        <path d="M0 -40 L960 140 L960 220 L0 40Z" fill="#7b6a8a"/>
+        <path d="M0 -120 L960 60 L960 140 L0 -40Z" fill="#b7a46a"/>
+        <!-- batolito jurásico al oeste -->
+        <path d="M0 200 Q60 150 150 190 L170 340 L0 340Z" fill="#e3c9c1"/>
+        <!-- plutón Caleu -->
+        <path d="M420 340 C410 250 440 170 500 100 C530 60 590 50 620 90 C670 150 680 250 660 340Z" fill="#e8c6bd"/>
+        <g fill="#b98f86" opacity=".7"><circle cx="520" cy="200" r="2"/><circle cx="560" cy="160" r="2"/><circle cx="600" cy="230" r="2"/><circle cx="540" cy="270" r="2"/><circle cx="580" cy="110" r="2"/><circle cx="630" cy="190" r="2"/><circle cx="500" cy="300" r="2"/><circle cx="610" cy="300" r="2"/></g>
+      </g>
+      <path style="stroke:var(--ink)" d="M0 250 L120 230 L240 200 L360 170 L460 120 L520 74 L560 60 L600 76 L680 130 L780 170 L960 190" fill="none" stroke-width="2"/>
+      <!-- leyenda -->
+      <g font-family="Alegreya Sans,sans-serif" font-size="13" fill="#1f2a24">
+        <text x="16" y="290">Batolito Costero</text><text x="16" y="306" font-size="11">Jurásico</text>
+        <text x="470" y="250" font-weight="700">Plutón Caleu</text><text x="470" y="266" font-size="11">granodiorita · Cretácico Sup.</text>
+        <text x="240" y="268">Fm. Lo Prado</text>
+        <text x="300" y="212" fill="#fff">Fm. Veta Negra · Mb. Ocoa</text>
+        <text x="760" y="250">Fm. Las Chilcas</text>
+      </g>
+      <g style="fill:var(--muted)" font-family="IBM Plex Mono,monospace" font-size="12">
+        <text x="16" y="26">O · Océano Pacífico</text>
+        <text x="944" y="26" text-anchor="end">Valle Central · E</text>
+        <text style="fill:var(--ink)" x="560" y="44" text-anchor="middle">La Campana</text>
+      </g>
+    </svg>
+    <figcaption>Lámina 3. Corte geológico oeste-este, muy simplificado: capas volcánicas mesozoicas inclinadas al este, intruidas por el plutón granodiorítico que forma la cumbre.</figcaption>
+  </figure>
+
+  <div class="geo-list">
+    <div class="geo"><div class="age"><strong>~200–150 Ma</strong>Jurásico</div><div><b>Batolito de la Costa.</b> Granitoides de un arco magmático jurásico, hoy expuestos más al oeste, cerca del litoral. Marcan la primera posición del arco en esta latitud.</div></div>
+    <div class="geo"><div class="age"><strong>~140–125 Ma</strong>Cretácico Inf.</div><div><b>Formación Lo Prado.</b> Lavas y rocas sedimentarias marinas y continentales depositadas en una cuenca de intraarco que se hundía.</div></div>
+    <div class="geo"><div class="age"><strong>~125–100 Ma</strong>Cretácico Inf.</div><div><b>Formación Veta Negra y las ocoítas.</b> Miles de metros de lavas andesíticas. Su Miembro Ocoa da nombre a la <b>ocoíta</b>, una andesita porfírica con grandes cristales tabulares de plagioclasa (de 1 a varios cm) en una matriz oscura. El término nació aquí. En el sendero se reconoce en bloques gris oscuro a verdoso con "listones" blancos.</div></div>
+    <div class="geo"><div class="age"><strong>~100–94 Ma</strong>Cretácico Sup.</div><div><b>Intrusión del Plutón Caleu.</b> Un gran cuerpo de magma se emplazó en las lavas y cristalizó en profundidad como gabros, dioritas, tonalitas y granodioritas. La granodiorita es más resistente que la roca que la rodea, y por eso hoy forma las cumbres de La Campana y El Roble. Las aureolas de contacto y los diques asociados explican las vetas de cobre y oro explotadas desde la Colonia.</div></div>
+    <div class="geo"><div class="age"><strong>~90–66 Ma</strong>Cretácico Sup.</div><div><b>Formación Las Chilcas</b> (al este). Conglomerados y volcanitas que registran el inicio del alzamiento y la erosión de la cuenca.</div></div>
+    <div class="geo"><div class="age"><strong>66 Ma – hoy</strong>Cenozoico</div><div><b>Alzamiento y exhumación.</b> La subducción migró hacia el este, a los Andes actuales. La Cordillera de la Costa se alzó y la erosión desgastó kilómetros de cobertura hasta dejar expuesto el plutón.</div></div>
+    <div class="geo"><div class="age"><strong>2,6 Ma – hoy</strong>Cuaternario</div><div><b>Quebradas, maicillo y refugios.</b> El agua talló quebradas profundas como la de La Cascada. La granodiorita se meteoriza a <b>maicillo</b>, una arena gruesa de feldespato y cuarzo que forma suelos delgados y permeables. Con los ciclos glaciales del Pleistoceno, las quebradas frías y las cumbres que atrapan neblina funcionaron como <b>refugios</b>. Por eso aquí vive el roble de Santiago (<i>Nothofagus macrocarpa</i>), en el límite norte del género <i>Nothofagus</i> en Chile.</div></div>
+  </div>
+
+  <div class="callout green">
+    <h3>Qué observar en terreno: geología</h3>
+    <ul>
+      <li><b>Ocoíta:</b> cristales blancos de plagioclasa en forma de listón dentro de roca oscura, en bloques del lecho de la quebrada y en los taludes del camino.</li>
+      <li><b>Granodiorita:</b> roca clara moteada de negro (biotita y hornblenda), en bloques rodados desde las partes altas. Bajo la lupa se ven cuarzo vítreo, feldespato blanco a rosado y micas negras.</li>
+      <li><b>Maicillo:</b> el suelo arenoso que cruje bajo los pies en la ladera norte. Erosiona con facilidad, por eso no conviene salirse del sendero.</li>
+      <li><b>Diaclasas y escarpes:</b> la cascada cae sobre roca fracturada. Las fracturas guían por dónde corre el agua.</li>
+      <li><b>Relación roca–vida:</b> compare la ladera de suelo delgado (palmas, puyas, suculentas) con el fondo de quebrada, donde se acumulan suelo y agua (peumo, helechos).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ HISTORIA ============ -->
+<section id="historia">
+  <header><div class="eyebrow">Sección 4</div><h2>Historia humana del parque</h2></header>
+  <div class="geo-list">
+    <div class="geo"><div class="age"><strong>Prehispánico</strong></div><div>Poblaciones del Complejo Aconcagua y luego influencia inca en los valles de Aconcagua y Quillota. Los cocos de palma y otros frutos nativos formaban parte de la dieta.</div></div>
+    <div class="geo"><div class="age"><strong>Colonia – s. XX</strong></div><div>Minería de oro y cobre en vetas del macizo. Extracción de leña y carbón, ganadería y <b>cosecha de savia de palma</b> para "miel de palma". Para sacar la savia había que voltear la palma, y esta práctica redujo mucho los palmares de Chile central.</div></div>
+    <div class="geo"><div class="age"><strong>Agosto 1834</strong></div><div><b>Charles Darwin</b> sube el Cerro La Campana durante el viaje del <i>Beagle</i>. En su diario cuenta que pasó la noche y el día siguiente en la cumbre, describe la vista de los Andes y del Aconcagua y lo recuerda como uno de los días más gratos del viaje. Una placa en la cumbre recuerda la ascensión.</div></div>
+    <div class="geo"><div class="age"><strong>1967</strong></div><div>Se crea el <b>Parque Nacional La Campana</b>, administrado por CONAF. Tiene unas 8.000 ha en tres sectores: Granizo, Cajón Grande y Ocoa.</div></div>
+    <div class="geo"><div class="age"><strong>1984</strong></div><div>La UNESCO declara la <b>Reserva de la Biosfera La Campana–Peñuelas</b>, por su valor como muestra del ecosistema mediterráneo chileno, uno de los puntos calientes de biodiversidad del planeta.</div></div>
+  </div>
+</section>
+
+<!-- ============ CRIPTÓGAMAS ============ -->
+<section id="criptogamas">
+  <header><div class="eyebrow">Sección 5 · Zona 3</div><h2>Criptógamas de quebrada: hepáticas, musgos y helechos</h2></header>
+  <p>En las rocas que rezuman agua y en los sustratos húmedos de la quebrada vive una comunidad diversa de plantas no vasculares y pteridófitas. En octubre sus estructuras reproductivas están en su momento más visible.</p>
+  <div class="cards">
+    <article class="card">
+      <svg viewBox="0 0 320 200" role="img" aria-label="Hepática talosa con arquegonióforos en forma de sombrilla y copas gemíferas">
+        <path d="M30 170 C60 140 100 150 120 130 C140 150 170 140 160 170 C190 150 230 160 250 140 C270 160 290 160 300 175 L30 180Z" fill="#4f8a4a"/>
+        <path d="M60 165 C90 150 110 155 120 140 M200 165 C220 155 240 152 250 145" stroke="#2f5a3f" stroke-width="2" fill="none"/>
+        <g fill="#6aa65d" stroke="#2f5a3f"><path d="M88 165 l-6 -12 h14z"/><path d="M226 160 l-6 -12 h14z"/></g>
+        <g fill="#e9e3c8"><circle cx="88" cy="154" r="1.8"/><circle cx="91" cy="155" r="1.8"/><circle cx="226" cy="149" r="1.8"/></g>
+        <g stroke="#7a8a5a" stroke-width="3"><line x1="140" y1="150" x2="140" y2="78"/><line x1="185" y1="160" x2="185" y2="96"/></g>
+        <g fill="#5f9a52" stroke="#2f5a3f" stroke-width="1.2">
+          <path d="M140 78 l-26 8 l6 -10 l-12 -4 l14 -6 l-4 -10 l14 6 l8 -10 l8 10 l14 -6 l-4 10 l14 6 l-12 4 l6 10z"/>
+          <path d="M185 96 l-20 6 l5 -8 l-9 -3 l11 -5 l-3 -8 l11 5 l5 -8 l6 8 l11 -5 l-3 8 l11 5 l-9 3 l5 8z"/>
+        </g>
+        <g style="fill:var(--muted)" font-family="IBM Plex Mono,monospace" font-size="10"><text x="200" y="40">arquegonióforo</text><text x="20" y="130">copa gemífera</text><text x="240" y="195">talo</text></g>
+      </svg>
+      <div class="body"><span class="tag shade">Roca mojada</span><div class="name">Marchantia sp.</div><div class="common">Hepática talosa · en la guía original: <i>M. polymorpha</i></div>
+        <ul><li>Talo verde, ceroso, aplanado y con ramificación dicotómica (1–2 cm de ancho).</li><li>Copas gemíferas con yemas asexuales.</li><li>En octubre desarrolla "sombrillas" erguidas de 2–3 cm para la reproducción sexual.</li></ul></div>
+    </article>
+    <article class="card">
+      <svg viewBox="0 0 320 200" role="img" aria-label="Fronda de culantrillo con raquis negro y pínulas en abanico">
+        <path d="M160 195 C158 160 150 120 140 60 C135 35 145 20 160 12" stroke="#1b1b1b" stroke-width="2.4" fill="none"/>
+        <g stroke="#1b1b1b" stroke-width="1.4" fill="none"><path d="M152 130 q-30 -6 -60 -4 M156 130 q30 -10 62 -6 M146 95 q-24 -6 -50 0 M148 95 q26 -12 54 -8 M142 62 q-18 -6 -36 2 M143 62 q20 -12 40 -6"/></g>
+        <g fill="#5c9b56" stroke="#2f5a3f" stroke-width=".8">
+          <path d="M100 126 q-8 -16 6 -22 q12 6 6 22z"/><path d="M120 128 q-8 -16 6 -22 q12 6 6 22z"/><path d="M82 128 q-8 -16 6 -22 q12 6 6 22z"/>
+          <path d="M180 124 q-6 -16 8 -22 q12 8 4 22z"/><path d="M200 122 q-6 -16 8 -22 q12 8 4 22z"/><path d="M216 124 q-6 -16 8 -22 q12 8 4 22z"/>
+          <path d="M104 94 q-8 -14 6 -20 q12 6 4 20z"/><path d="M122 94 q-8 -14 6 -20 q12 6 4 20z"/><path d="M168 90 q-6 -14 8 -20 q12 6 4 20z"/><path d="M188 86 q-6 -14 8 -20 q12 6 4 20z"/>
+          <path d="M112 60 q-6 -12 6 -16 q10 6 2 16z"/><path d="M166 54 q-4 -12 8 -16 q10 6 2 16z"/>
+        </g>
+        <g stroke="#7a4a1f" stroke-width="2.2" fill="none"><path d="M88 108 q6 -3 12 0"/><path d="M186 104 q6 -3 12 0"/><path d="M110 76 q6 -3 12 0"/></g>
+        <g style="fill:var(--muted)" font-family="IBM Plex Mono,monospace" font-size="10"><text x="190" y="175">raquis negro</text><text x="210" y="70">falso indusio</text></g>
+      </svg>
+      <div class="body"><span class="tag shade">Grietas umbrosas</span><div class="name">Adiantum chilense</div><div class="common">Culantrillo, doradilla</div>
+        <ul><li>Pecíolo y raquis negros, finos, rígidos y brillantes, como alambre.</li><li>Pínulas en abanico.</li><li>Soros bajo el margen de la pínula, que se dobla hacia abajo (falso indusio).</li></ul></div>
+    </article>
+    <article class="card">
+      <svg viewBox="0 0 320 200" role="img" aria-label="Cojín de musgo con cápsulas globosas sobre setas">
+        <rect x="40" y="160" width="250" height="40" fill="#8e8a84"/>
+        <path d="M50 165 C70 120 120 110 160 112 C210 110 260 120 280 165Z" fill="#5d9e4f"/>
+        <g stroke="#3d7a35" stroke-width="1.2">
+          <path d="M70 160 l-4 -18 M90 150 l2 -22 M110 145 l-3 -24 M130 142 l2 -26 M150 140 l-2 -26 M170 140 l3 -26 M190 142 l-2 -24 M210 145 l2 -22 M230 150 l-2 -20 M250 158 l3 -16"/>
+        </g>
+        <g stroke="#9a6a3a" stroke-width="1.4" fill="none"><path d="M120 120 q2 -40 -6 -60"/><path d="M160 116 q4 -46 10 -66"/><path d="M200 120 q-2 -38 8 -56"/></g>
+        <g fill="#7f9a3a" stroke="#4a5a20"><circle cx="114" cy="56" r="7"/><circle cx="171" cy="46" r="7"/><circle cx="209" cy="60" r="7"/></g>
+        <g style="fill:var(--muted)" font-family="IBM Plex Mono,monospace" font-size="10"><text x="222" y="40">cápsulas globosas</text><text x="12" y="100">cojín</text></g>
+      </svg>
+      <div class="body"><span class="tag shade">Roca húmeda</span><div class="name">Bartramia / Philonotis</div><div class="common">Musgos "manzana" · en la guía original: <i>Bartramia halleriana</i></div>
+        <ul><li>Cojines verde esmeralda sobre roca húmeda.</li><li>Cápsulas globosas sobre setas: el carácter que sirve en terreno para la familia Bartramiaceae.</li><li>La especie exacta se confirma solo con microscopio (hojas y peristoma).</li></ul></div>
+    </article>
+  </div>
+  <div class="callout green"><h3>Otros a buscar en la quebrada</h3>
+    <p>Helechos: <i>Blechnum hastatum</i> (palmilla), <i>Adiantum sulphureum</i> (envés amarillo azufre), <i>Cheilanthes</i> y <i>Pellaea</i> en roca seca. Líquenes foliosos y crustosos sobre granodiorita. Hepáticas foliosas sobre troncos de peumo.</p></div>
+</section>
+
+<!-- ============ FANERÓGAMAS ============ -->
+<section id="flora">
+  <header><div class="eyebrow">Sección 6 · Zonas 1–2</div><h2>Palmar, chaguales y matorral esclerófilo</h2></header>
+  <p>En octubre florecen los chaguales (<i>Puya</i>) en la ladera norte de Ocoa. Sus flores ofrecen mucho néctar y atraen aves e insectos.</p>
+  <div class="cards">
+    <article class="card">
+      <svg viewBox="0 0 320 220" role="img" aria-label="Palma chilena con tronco en forma de botella y corona de hojas pinnadas">
+        <path d="M140 215 C126 170 128 120 146 70 L174 70 C192 120 194 170 180 215Z" fill="#8c877d"/>
+        <g stroke="#6d695f" stroke-width="1" opacity=".7"><path d="M138 190 h44 M136 170 h48 M138 150 h46 M142 130 h38 M146 110 h30 M150 90 h22"/></g>
+        <g stroke="#2f5a3f" stroke-width="5" fill="none" stroke-linecap="round"><path d="M160 70 q-50 -14 -100 16 M160 70 q-44 -46 -96 -36 M160 70 q-10 -50 -36 -62 M160 70 q16 -52 54 -60 M160 70 q54 -30 100 -10 M160 70 q50 6 92 46 M160 70 q-40 10 -76 46"/></g>
+        <g fill="#c99a2e"><circle cx="150" cy="80" r="4"/><circle cx="158" cy="84" r="4"/><circle cx="166" cy="80" r="4"/><circle cx="172" cy="86" r="4"/></g>
+        <g style="fill:var(--muted)" font-family="IBM Plex Mono,monospace" font-size="10"><text x="196" y="160">tronco ≤ 1,3 m Ø</text><text x="180" y="98">coquitos</text></g>
+      </svg>
+      <div class="body"><span class="tag sun">Ladera norte</span><span class="tag cons">Vulnerable · endémica</span><div class="name">Jubaea chilensis</div><div class="common">Palma chilena</div>
+        <ul><li>Tronco gris, liso y abultado como botella, hasta ~1,3 m de diámetro.</li><li>Crece muy lento y florece después de varias décadas (la guía indica más de 50 años).</li><li>Ocoa conserva una de las mayores poblaciones naturales del país.</li><li>Sus "coquitos" maduran de fines de verano a otoño. Los consumen degú, cururo y otros roedores.</li></ul></div>
+    </article>
+    <article class="card">
+      <svg viewBox="0 0 320 220" role="img" aria-label="Chagual azul con roseta espinosa e inflorescencia ramificada de flores turquesa">
+        <g stroke="#7f8f6a" stroke-width="7" stroke-linecap="round"><path d="M160 210 l-60 -24 M160 210 l-40 -40 M160 210 l-10 -46 M160 210 l26 -42 M160 210 l58 -28 M160 210 l70 -6 M160 210 l-74 -4"/></g>
+        <rect x="157" y="20" width="6" height="170" fill="#6b6a4b"/>
+        <g stroke="#6b6a4b" stroke-width="3"><path d="M160 60 h-30 M160 60 h30 M160 90 h-36 M160 90 h36 M160 120 h-40 M160 120 h40 M160 150 h-34 M160 150 h34"/></g>
+        <g fill="#1f8f8a"><circle cx="134" cy="56" r="5"/><circle cx="148" cy="64" r="5"/><circle cx="186" cy="56" r="5"/><circle cx="172" cy="64" r="5"/><circle cx="126" cy="86" r="5"/><circle cx="142" cy="94" r="5"/><circle cx="194" cy="86" r="5"/><circle cx="178" cy="94" r="5"/><circle cx="122" cy="116" r="5"/><circle cx="138" cy="124" r="5"/><circle cx="198" cy="116" r="5"/><circle cx="182" cy="124" r="5"/><circle cx="128" cy="146" r="5"/><circle cx="192" cy="146" r="5"/></g>
+        <g fill="#c99a2e"><circle cx="130" cy="60" r="1.6"/><circle cx="190" cy="60" r="1.6"/><circle cx="122" cy="90" r="1.6"/><circle cx="198" cy="90" r="1.6"/></g>
+        <path d="M130 60 h-30 M190 60 h30 M130 90 h-36 M190 90 h36" stroke="#6b6a4b" stroke-width="2" opacity=".5"/>
+        <g style="fill:var(--muted)" font-family="IBM Plex Mono,monospace" font-size="10"><text x="214" y="30">ápices estériles</text><text x="226" y="40">(posaderos)</text></g>
+      </svg>
+      <div class="body"><span class="tag sun">Ladera norte</span><div class="name">Puya berteroniana</div><div class="common">Chagual azul</div>
+        <ul><li>Flores azul turquesa de brillo metálico y anteras naranjas.</li><li>Vara de 2 a 3,5 m. Las puntas de las ramas son estériles y sirven de posadero a las aves.</li><li>Néctar abundante. Polinizada por aves (tordos, picaflores).</li></ul></div>
+    </article>
+    <article class="card">
+      <svg viewBox="0 0 320 220" role="img" aria-label="Pajarito azul, trepadora con flores violeta azuladas espolonadas">
+        <path d="M40 210 C80 160 60 120 110 100 C160 80 160 40 220 30 C260 24 280 50 290 80" stroke="#5a7a3e" stroke-width="2.4" fill="none"/>
+        <g fill="#6aa65d" stroke="#3d6a32" stroke-width=".8"><path d="M80 150 l-14 -6 l12 -10 l-2 -14 l10 10 l12 -6 l-6 12 l8 10 l-14 -2z"/><path d="M160 70 l-12 -8 l12 -8 l0 -14 l8 10 l12 -4 l-6 12 l6 10 l-12 -2z"/><path d="M250 50 l-10 -8 l12 -6 l2 -12 l6 10 l12 -2 l-6 10 l6 8 l-12 0z"/></g>
+        <g transform="translate(110 100)"><g fill="#4b5fc4"><ellipse cx="-10" cy="-6" rx="10" ry="7"/><ellipse cx="10" cy="-6" rx="10" ry="7"/><ellipse cx="-8" cy="8" rx="8" ry="6"/><ellipse cx="8" cy="8" rx="8" ry="6"/><ellipse cx="0" cy="12" rx="7" ry="6"/></g><circle r="4" fill="#f2f2f2"/><path d="M0 -6 l-4 -22" stroke="#4b5fc4" stroke-width="4" stroke-linecap="round"/></g>
+        <g transform="translate(220 40) scale(.8)"><g fill="#5a63c9"><ellipse cx="-10" cy="-6" rx="10" ry="7"/><ellipse cx="10" cy="-6" rx="10" ry="7"/><ellipse cx="-8" cy="8" rx="8" ry="6"/><ellipse cx="8" cy="8" rx="8" ry="6"/><ellipse cx="0" cy="12" rx="7" ry="6"/></g><circle r="4" fill="#f2f2f2"/><path d="M0 -6 l-4 -22" stroke="#5a63c9" stroke-width="4" stroke-linecap="round"/></g>
+        <g style="fill:var(--muted)" font-family="IBM Plex Mono,monospace" font-size="10"><text x="130" y="140">espolón</text></g>
+      </svg>
+      <div class="body"><span class="tag">Sobre litre y peumo</span><div class="name">Tropaeolum azureum</div><div class="common">Pajarito azul · endémica</div>
+        <ul><li>Trepadora herbácea delicada que nace de un tubérculo subterráneo.</li><li>Hojas palmatisectas y flores violeta azuladas con espolón corto.</li><li>Se enreda en las ramas de litres y peumos y florece en primavera.</li></ul></div>
+    </article>
+    <article class="card">
+      <svg viewBox="0 0 320 220" role="img" aria-label="Rama de peumo con hojas ovadas coriáceas y frutos rojos">
+        <path d="M30 190 C100 150 180 120 290 60" stroke="#6b4e34" stroke-width="5" fill="none"/>
+        <g fill="#3f7a46" stroke="#24502c" stroke-width="1">
+          <ellipse cx="80" cy="150" rx="26" ry="13" transform="rotate(-50 80 150)"/><ellipse cx="96" cy="182" rx="26" ry="13" transform="rotate(30 96 182)"/>
+          <ellipse cx="150" cy="112" rx="28" ry="14" transform="rotate(-60 150 112)"/><ellipse cx="170" cy="150" rx="28" ry="14" transform="rotate(20 170 150)"/>
+          <ellipse cx="220" cy="76" rx="26" ry="13" transform="rotate(-55 220 76)"/><ellipse cx="240" cy="112" rx="26" ry="13" transform="rotate(25 240 112)"/>
+        </g>
+        <g fill="#c6423a"><ellipse cx="200" cy="120" rx="6" ry="8"/><ellipse cx="212" cy="126" rx="6" ry="8"/><ellipse cx="128" cy="160" rx="6" ry="8"/></g>
+      </svg>
+      <div class="body"><span class="tag shade">Quebradas</span><div class="name">Cryptocarya alba</div><div class="common">Peumo (Lauraceae)</div>
+        <ul><li>Árbol siempreverde. Las hojas coriáceas son muy aromáticas al frotarlas y tienen el envés glauco.</li><li>Frutos rojos ovoides.</li><li>Forma el dosel de las quebradas y laderas en sombra.</li></ul></div>
+    </article>
+  </div>
+
+  <h3>Cuadro comparativo: chaguales en floración</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Especie</th><th>Color floral</th><th>Vara</th><th>Ecología en octubre</th></tr></thead>
+    <tbody>
+      <tr><td><i>Puya berteroniana</i><br><span style="color:var(--muted)">Chagual azul</span></td><td>Azul turquesa metálico</td><td>2,0–3,5 m; puntas estériles que sirven de posadero</td><td>Mucho néctar denso. Lo visitan <i>Patagona gigas</i> y aves paseriformes.</td></tr>
+      <tr><td><i>Puya chilensis</i><br><span style="color:var(--muted)">Chagual amarillo</span></td><td>Amarillo verdoso, azufre</td><td>1,5–2,5 m, compacta; espinas agudas</td><td>Hospedera de las larvas de la mariposa del chagual (<i>Castnia eudesmia</i>).</td></tr>
+      <tr><td><i>Puya coerulea</i><br><span style="color:var(--muted)">Chagualillo</span></td><td>Azul violáceo oscuro</td><td>Menor, de 0,5–1,5 m</td><td>Puede confundirse con <i>P. berteroniana</i>; fíjese en el tamaño de la planta y el tono de la flor.</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout alert"><h3>Cuidado con el litre</h3>
+    <p><i>Lithrea caustica</i> es muy común en la ladera. Su resina provoca dermatitis alérgica de contacto que puede ser severa en personas sensibles. Hojas coriáceas, de verde amarillento, con nervadura central marcada y el borde algo ondulado. No lo toque ni se siente debajo de él, y use pantalón largo.</p></div>
+
+  <h3>Otras especies del bosque esclerófilo a buscar</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Especie</th><th>Nombre común</th><th>Dónde</th><th>Clave de campo</th></tr></thead>
+    <tbody>
+      <tr><td><i>Quillaja saponaria</i></td><td>Quillay</td><td>Laderas</td><td>Hojas lustrosas dentadas. Sus saponinas tienen uso agrícola y veterinario.</td></tr>
+      <tr><td><i>Peumus boldus</i></td><td>Boldo</td><td>Laderas medias</td><td>Hojas ásperas con pequeñas protuberancias y fuerte aroma.</td></tr>
+      <tr><td><i>Beilschmiedia miersii</i></td><td>Belloto del norte</td><td>Quebradas húmedas</td><td>Hojas grandes opuestas. Especie amenazada y endémica.</td></tr>
+      <tr><td><i>Crinodendron patagua</i></td><td>Patagua</td><td>Cursos de agua</td><td>Flores blancas acampanadas colgantes, de fines de primavera a verano.</td></tr>
+      <tr><td><i>Kageneckia oblonga</i></td><td>Bollén</td><td>Laderas secas</td><td>Hojas aserradas y frutos estrellados.</td></tr>
+      <tr><td><i>Colliguaja odorifera</i></td><td>Colliguay</td><td>Matorral</td><td>Látex blanco y frutos que estallan con el calor.</td></tr>
+      <tr><td><i>Vachellia caven</i></td><td>Espino</td><td>Zona 1, llanos</td><td>Espinas pareadas y flores amarillas en pompón (floración de fines de invierno).</td></tr>
+      <tr><td><i>Echinopsis chiloensis</i></td><td>Quisco</td><td>Ladera norte</td><td>Cactus columnar con flores blancas en primavera.</td></tr>
+      <tr><td><i>Nothofagus macrocarpa</i></td><td>Roble de Santiago</td><td>Partes altas (sobre todo sectores Granizo y Cajón Grande)</td><td>Relicto: el <i>Nothofagus</i> más septentrional de Chile. Probablemente no esté en esta ruta.</td></tr>
+      <tr><td><i>Alstroemeria</i> spp., <i>Chloraea</i> spp.</td><td>Alstroemerias, orquídeas</td><td>Claros de matorral</td><td>Floración de primavera. Fotografíe sin cortar.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ FAUNA ============ -->
+<section id="fauna">
+  <header><div class="eyebrow">Sección 7</div><h2>Invertebrados y fauna silvestre</h2></header>
+  <div class="cards">
+    <article class="card">
+      <svg viewBox="0 0 320 200" role="img" aria-label="Mariposa del chagual con alas anteriores pardas y posteriores rojo anaranjado">
+        <g transform="translate(160 100)">
+          <path d="M0 0 C-30 -60 -110 -70 -130 -40 C-120 -10 -50 0 0 0Z" fill="#6f5a43" stroke="#3b2f22"/>
+          <path d="M0 0 C30 -60 110 -70 130 -40 C120 -10 50 0 0 0Z" fill="#6f5a43" stroke="#3b2f22"/>
+          <path d="M0 4 C-30 10 -100 30 -96 60 C-70 70 -20 40 0 4Z" fill="#e0532f" stroke="#3b2f22"/>
+          <path d="M0 4 C30 10 100 30 96 60 C70 70 20 40 0 4Z" fill="#e0532f" stroke="#3b2f22"/>
+          <g fill="#1d1d1d"><circle cx="-60" cy="40" r="7"/><circle cx="60" cy="40" r="7"/><circle cx="-80" cy="54" r="5"/><circle cx="80" cy="54" r="5"/><path d="M-30 30 q-20 10 -40 6 q20 -4 40 -6z"/><path d="M30 30 q20 10 40 6 q-20 -4 -40 -6z"/></g>
+          <g fill="#e8dcc0" opacity=".8"><path d="M-70 -40 l20 -6 l-6 10z"/><path d="M70 -40 l-20 -6 l6 10z"/></g>
+          <ellipse cx="0" cy="10" rx="6" ry="34" fill="#3b2f22"/>
+          <path d="M-2 -22 q-10 -24 -22 -30 M2 -22 q10 -24 22 -30" stroke="#3b2f22" stroke-width="2" fill="none"/>
+          <circle cx="-24" cy="-52" r="3" fill="#3b2f22"/><circle cx="24" cy="-52" r="3" fill="#3b2f22"/>
+        </g>
+      </svg>
+      <div class="body"><span class="tag sun">Alrededor de puyas</span><span class="tag cons">Protegida</span><div class="name">Castnia eudesmia</div><div class="common">Mariposa del chagual (Castniidae)</div>
+        <ul><li>Envergadura de 8 a 11 cm. Alas anteriores pardas; las posteriores rojo anaranjado con manchas negras.</li><li>Vuelo diurno rápido entre las 11:00 y las 15:00, en las horas de más sol.</li><li>Las larvas perforan las rosetas de <i>Puya</i>. Su vuelo es sobre todo de primavera a inicios de verano, así que en octubre el registro es posible pero no seguro.</li></ul></div>
+    </article>
+    <article class="card">
+      <svg viewBox="0 0 320 200" role="img" aria-label="Picaflor gigante con pico recto, garganta canela y rabadilla blanca">
+        <path d="M90 92 l-80 -10" stroke="#2b2b2b" stroke-width="3" stroke-linecap="round"/>
+        <ellipse cx="170" cy="110" rx="62" ry="30" fill="#8a6a42"/>
+        <circle cx="104" cy="92" r="22" fill="#6c5636"/>
+        <circle cx="98" cy="86" r="3" fill="#111"/><circle cx="97" cy="85" r="1" fill="#fff"/>
+        <path d="M118 108 q30 26 76 22 q-30 -4 -76 -22z" fill="#c98a52"/>
+        <path d="M150 96 C170 20 250 10 270 40 C240 50 200 80 168 104Z" fill="#7a6b52" stroke="#4d4231"/>
+        <path d="M226 112 l60 10 l-12 12 l-50 -10z" fill="#5d4b30"/>
+        <ellipse cx="226" cy="120" rx="10" ry="6" fill="#f2efe6"/>
+        <path d="M160 138 l-6 20 M176 138 l2 20" stroke="#2b2b2b" stroke-width="2"/>
+      </svg>
+      <div class="body"><span class="tag sun">Varas de chagual</span><div class="name">Patagona gigas</div><div class="common">Picaflor gigante · migrante estival</div>
+        <ul><li>18–20 cm, del tamaño de un zorzal. Es el picaflor más grande del mundo.</li><li>Aleteo lento, de unos 10–15 batidos por segundo. A menudo planea brevemente.</li><li>Llega en primavera. Usa mucho el néctar de los chaguales, pero también visita quintrales, cactus y otras flores.</li><li>Rabadilla blanquecina y vientre canela.</li></ul></div>
+    </article>
+    <article class="card">
+      <svg viewBox="0 0 320 200" role="img" aria-label="Lagartija sobre roca granítica con escamas quilladas brillantes y líneas claras">
+        <path d="M0 170 C60 140 140 150 200 140 C260 132 300 150 320 160 L320 200 L0 200Z" fill="#cdbcae"/>
+        <g fill="#b39a8c" opacity=".6"><circle cx="50" cy="180" r="3"/><circle cx="120" cy="170" r="2"/><circle cx="220" cy="168" r="3"/><circle cx="280" cy="182" r="2"/></g>
+        <path d="M70 140 C110 120 190 118 230 128 C250 132 262 126 280 120 C262 134 250 140 230 140 C190 148 120 152 70 146Z" fill="#4f5a3a"/>
+        <path d="M230 128 C260 110 300 104 316 100" stroke="#4f5a3a" stroke-width="6" stroke-linecap="round" fill="none"/>
+        <path d="M70 140 C50 132 34 136 26 142 C36 150 54 150 70 146Z" fill="#4a5436"/>
+        <circle cx="40" cy="140" r="2.2" fill="#111"/>
+        <path d="M80 136 C130 126 180 126 228 132" stroke="#e7c44a" stroke-width="2.5" fill="none"/>
+        <path d="M80 144 C130 140 180 140 228 138" stroke="#e7c44a" stroke-width="2" fill="none" opacity=".8"/>
+        <g stroke="#3d4630" stroke-width="4" stroke-linecap="round"><path d="M100 146 l-10 18 M110 134 l-6 -16 M200 140 l8 18 M196 128 l10 -14"/></g>
+      </svg>
+      <div class="body"><span class="tag sun">Rocas expuestas</span><div class="name">Liolaemus nitidus</div><div class="common">Lagarto nítido · endémico</div>
+        <ul><li>Lagartija grande y robusta, con escamas quilladas, ásperas y brillantes.</li><li>Bandas dorsolaterales claras, de amarillentas a blanquecinas.</li><li>Se asolea sobre rocas desde media mañana. En el mismo hábitat viven <i>L. lemniscatus</i>, <i>L. fuscus</i> y <i>L. chiliensis</i>.</li></ul></div>
+    </article>
+    <article class="card">
+      <svg viewBox="0 0 320 200" role="img" aria-label="Zorro culpeo con cabeza y patas rojizas y punta de cola negra">
+        <path d="M230 120 C270 110 300 130 310 160 C296 150 280 146 266 150 Z" fill="#9a8a78"/>
+        <path d="M300 150 C306 156 310 160 312 166 C304 162 298 158 294 154Z" fill="#1d1d1d"/>
+        <ellipse cx="170" cy="118" rx="70" ry="30" fill="#a39079"/>
+        <path d="M110 110 C90 90 70 80 52 84 L44 70 L60 76 L62 62 L74 76 C92 76 108 88 120 100Z" fill="#c4743f"/>
+        <path d="M44 84 L28 90 L46 96 Z" fill="#c4743f"/><circle cx="26" cy="90" r="2.5" fill="#1d1d1d"/>
+        <circle cx="60" cy="82" r="2.2" fill="#1d1d1d"/>
+        <path d="M54 92 C70 100 90 108 110 120" stroke="#f0e6d6" stroke-width="5" fill="none"/>
+        <g fill="#c4743f"><rect x="122" y="138" width="9" height="40" rx="3"/><rect x="142" y="140" width="9" height="38" rx="3"/><rect x="200" y="138" width="9" height="40" rx="3"/><rect x="220" y="136" width="9" height="40" rx="3"/></g>
+      </svg>
+      <div class="body"><span class="tag">Borde de matorral</span><div class="name">Lycalopex culpaeus</div><div class="common">Zorro culpeo</div>
+        <ul><li>Cánido grande con cabeza, orejas y patas de color rojizo intenso.</li><li>Cola afelpada con la punta negra.</li><li>No lo confunda con la chilla (<i>L. griseus</i>), más pequeña y gris, que tiene una mancha negra en el muslo y el mentón.</li></ul></div>
+    </article>
+  </div>
+
+  <h3>Clave rápida de identificación en terreno</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Lo que ve</th><th>Especie probable</th><th>Hábitat</th><th>Carácter diagnóstico</th></tr></thead>
+    <tbody>
+      <tr><td>Lámina verde plana con "sombrillas"</td><td><i>Marchantia</i> sp.</td><td>Rocas mojadas de la quebrada</td><td>Sombrillas erguidas de 2–3 cm y copas con yemas</td></tr>
+      <tr><td>Helecho de frondas en abanico</td><td><i>Adiantum chilense</i></td><td>Grietas umbrosas y húmedas</td><td>Tallos negros brillantes como alambre</td></tr>
+      <tr><td>Vara gigante con flores azul turquesa</td><td><i>Puya berteroniana</i></td><td>Laderas expuestas al sol</td><td>Espiga de hasta 3,5 m, flores que gotean néctar</td></tr>
+      <tr><td>Insecto de ~10 cm con alas rojas y negras</td><td><i>Castnia eudesmia</i></td><td>Matorral alrededor de puyas</td><td>Vuelo rápido y potente en las horas de más sol</td></tr>
+      <tr><td>Lagartija grande con líneas amarillas</td><td><i>Liolaemus nitidus</i></td><td>Rocas graníticas expuestas</td><td>Escamas quilladas muy brillantes al sol</td></tr>
+      <tr><td>Cánido nativo de cola afelpada</td><td><i>Lycalopex culpaeus</i></td><td>Bordes de matorral y senderos</td><td>Cabeza y patas rojizas, punta de la cola negra</td></tr>
+      <tr><td>Roca oscura con listones blancos</td><td>Ocoíta (andesita porfírica)</td><td>Taludes y bloques en el lecho</td><td>Fenocristales de plagioclasa de 1 a varios cm</td></tr>
+      <tr><td>Roca clara moteada de negro</td><td>Granodiorita (Plutón Caleu)</td><td>Bloques rodados, cumbres</td><td>Cuarzo, feldespato y biotita; se meteoriza a maicillo</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ CHECKLIST ============ -->
+<section id="checklist">
+  <header><div class="eyebrow">Sección 8</div><h2>Lista de registro de la jornada</h2></header>
+  <p>Marque lo que vaya observando. Las marcas se guardan solo en este dispositivo. <span class="counter" id="count">0 registros</span></p>
+  <div class="check" id="checks">
+    <div class="grp eyebrow">Geología</div>
+    <label><input type="checkbox" id="c-ocoita"> Ocoíta (listones de plagioclasa)</label>
+    <label><input type="checkbox" id="c-granod"> Granodiorita</label>
+    <label><input type="checkbox" id="c-maicillo"> Suelo de maicillo</label>
+    <label><input type="checkbox" id="c-cascada"> Cascada con agua</label>
+    <div class="grp eyebrow">Flora</div>
+    <label><input type="checkbox" id="c-jubaea"> <i>Jubaea chilensis</i></label>
+    <label><input type="checkbox" id="c-pbert"> <i>Puya berteroniana</i> en flor</label>
+    <label><input type="checkbox" id="c-pchil"> <i>Puya chilensis</i></label>
+    <label><input type="checkbox" id="c-trop"> <i>Tropaeolum azureum</i></label>
+    <label><input type="checkbox" id="c-peumo"> <i>Cryptocarya alba</i></label>
+    <label><input type="checkbox" id="c-litre"> <i>Lithrea caustica</i></label>
+    <label><input type="checkbox" id="c-quillay"> <i>Quillaja saponaria</i></label>
+    <label><input type="checkbox" id="c-boldo"> <i>Peumus boldus</i></label>
+    <label><input type="checkbox" id="c-belloto"> <i>Beilschmiedia miersii</i></label>
+    <label><input type="checkbox" id="c-quisco"> <i>Echinopsis chiloensis</i></label>
+    <label><input type="checkbox" id="c-alstro"> <i>Alstroemeria</i> sp.</label>
+    <div class="grp eyebrow">Criptógamas</div>
+    <label><input type="checkbox" id="c-march"> <i>Marchantia</i> con sombrillas</label>
+    <label><input type="checkbox" id="c-adi"> <i>Adiantum chilense</i> con soros</label>
+    <label><input type="checkbox" id="c-musgo"> Musgo con cápsulas globosas</label>
+    <label><input type="checkbox" id="c-liquen"> Líquenes sobre roca</label>
+    <div class="grp eyebrow">Aves</div>
+    <label><input type="checkbox" id="c-patagona"> <i>Patagona gigas</i>, picaflor gigante</label>
+    <label><input type="checkbox" id="c-sephan"> <i>Sephanoides sephaniodes</i>, picaflor chico</label>
+    <label><input type="checkbox" id="c-turca"> <i>Pteroptochos megapodius</i>, turca</label>
+    <label><input type="checkbox" id="c-tapac"> <i>Scelorchilus albicollis</i>, tapaculo</label>
+    <label><input type="checkbox" id="c-tenca"> <i>Mimus thenca</i>, tenca</label>
+    <label><input type="checkbox" id="c-diuca"> <i>Diuca diuca</i>, diuca</label>
+    <label><input type="checkbox" id="c-chincol"> <i>Zonotrichia capensis</i>, chincol</label>
+    <label><input type="checkbox" id="c-cachud"> <i>Anairetes parulus</i>, cachudito</label>
+    <label><input type="checkbox" id="c-aguila"> <i>Geranoaetus melanoleucus</i>, águila</label>
+    <label><input type="checkbox" id="c-tordo"> <i>Curaeus curaeus</i>, tordo</label>
+    <div class="grp eyebrow">Reptiles, mamíferos, insectos</div>
+    <label><input type="checkbox" id="c-lnit"> <i>Liolaemus nitidus</i></label>
+    <label><input type="checkbox" id="c-llem"> <i>Liolaemus lemniscatus</i></label>
+    <label><input type="checkbox" id="c-culebra"> <i>Philodryas chamissonis</i>, culebra de cola larga</label>
+    <label><input type="checkbox" id="c-culpeo"> <i>Lycalopex culpaeus</i></label>
+    <label><input type="checkbox" id="c-degu"> <i>Octodon degus</i>, degú</label>
+    <label><input type="checkbox" id="c-castnia"> <i>Castnia eudesmia</i></label>
+  </div>
+  <button class="reset" id="reset" type="button">Borrar marcas</button>
+</section>
+
+<!-- ============ PRECISIÓN ============ -->
+<section id="precision">
+  <header><div class="eyebrow">Sección 9</div><h2>Notas de precisión sobre la guía original</h2></header>
+  <p>Al revisar el PDF encontré algunos puntos que conviene matizar antes de usarlo como referencia técnica:</p>
+  <div class="fix">
+    <span class="k">Imágenes</span><div>Las fotografías de las Figuras 2.1, 2.2, 3.1, 3.2, 4.1 y 4.2 no cargan en el PDF: aparecen marcos vacíos. Las láminas de esta guía son ilustraciones esquemáticas de reemplazo.</div>
+    <span class="k">Marchantia</span><div>La guía nombra <i>M. polymorpha</i>, que es cosmopolita. En Chile central también hay especies nativas, como <i>M. berteroana</i>. Sin examen de escamas ventrales y receptáculos conviene registrar <i>Marchantia</i> sp.</div>
+    <span class="k">Bartramia</span><div><i>B. halleriana</i> no es el musgo "manzana" más esperable en quebradas de Chile central. Además, las cápsulas de Bartramiaceae suelen ser verdes y luego pardas, no rojizas. Registre "Bartramiaceae (<i>Bartramia</i>/<i>Philonotis</i>)" y confirme con microscopio.</div>
+    <span class="k">Patagona</span><div>La guía dice que "migra exclusivamente para alimentarse del néctar del chagual". En realidad usa muchas fuentes de néctar, además de insectos. El chagual es un recurso importante, pero no el único.</div>
+    <span class="k">Castnia</span><div>La guía la describe como hospedera solo de <i>P. chilensis</i>. Las larvas se citan también en otras <i>Puya</i>. El vuelo máximo suele ser algo más tardío que octubre.</div>
+    <span class="k">Cotas</span><div>Las altitudes de 350 m y 650 m, y la distancia del sendero, conviene confirmarlas con CONAF en la guardería o con un GPS. Varían según el punto exacto de partida.</div>
+    <span class="k ok">Correcto</span><div>Los caracteres diagnósticos de <i>Adiantum chilense</i>, <i>Jubaea chilensis</i>, <i>Puya berteroniana</i> y <i>Lycalopex culpaeus</i>, la zonación ladera norte/quebrada y el horario de observación son consistentes con la literatura.</div>
+  </div>
+  <div class="callout green"><h3>Para el ojo microbiológico</h3>
+    <p>Sobre el maicillo expuesto de la ladera norte busque <b>costras biológicas del suelo</b>: películas oscuras de cianobacterias, musgos diminutos y líquenes que estabilizan el suelo y fijan nitrógeno. Las quebradas húmedas tienen biopelículas sobre roca rezumante. En la rizósfera de las puyas y bajo el palmar se esperan comunidades adaptadas a la sequía estival, potencialmente interesantes como fuente de cepas tolerantes al estrés hídrico. El parque no permite colectar sin autorización de CONAF, así que mañana conviene solo fotografiar y georreferenciar.</p></div>
+</section>
+
+<!-- ============ LOGÍSTICA ============ -->
+<section id="logistica">
+  <header><div class="eyebrow">Sección 10</div><h2>Logística, seguridad y código de conducta</h2></header>
+  <div class="two">
+    <div class="callout"><h3>Qué llevar</h3><ul>
+      <li>Al menos 2 L de agua por persona. No beba agua de la quebrada sin tratar.</li>
+      <li>Cortavientos y una capa abrigada (mínima de 11 °C, viento O).</li>
+      <li>Protector solar, gorro y lentes: la ladera norte no tiene sombra.</li>
+      <li>Binoculares (8×–10×), lupa de 10×, cámara con macro, libreta y GPS o app de mapas offline.</li>
+      <li>Pantalón largo por el litre y las espinas. Calzado con buena suela para el maicillo suelto.</li>
+    </ul></div>
+    <div class="callout alert"><h3>Antes de salir</h3><ul>
+      <li>Confirme en conaf.cl el horario del Sector Ocoa, la tarifa y si se requiere reserva en línea.</li>
+      <li>La cascada puede tener poco caudal según las lluvias del invierno. Las rocas mojadas son resbaladizas.</li>
+      <li>Hay puma (<i>Puma concolor</i>) en el parque. Los encuentros son raros: no camine solo al atardecer y no se agache si ve uno.</li>
+      <li>La señal de celular es irregular en la quebrada. Avise su ruta y su hora de regreso.</li>
+    </ul></div>
+  </div>
+  <div class="callout green"><h3>Código de conducta naturalista</h3>
+    <p>No recolecte plantas ni criptógamas. Mantenga al menos 10 m de distancia con la fauna silvestre. No salga de los senderos demarcados, para no erosionar las laderas de maicillo. No alimente animales y llévese su basura.</p></div>
+</section>
+
+<footer>
+  <p>Fuente base: «Guía de Campo: Biodiversidad de Primavera, Parque Nacional La Campana, Sector Ocoa y Sendero La Cascada» (PDF, 4 pp.). Ampliada con antecedentes geológicos (Formaciones Lo Prado, Veta Negra y Las Chilcas; Plutón Caleu), historia del parque y notas de precisión taxonómica. Pronóstico: modelo ECMWF IFS vía Solano, corrida del 10-10-2026. Las edades geológicas son aproximadas y las ilustraciones son esquemáticas.</p>
+</footer>
+</div>
+
+<script>
+(function(){
+  var KEY='lc-checklist-v1', box=document.getElementById('checks'), out=document.getElementById('count');
+  var inputs=[].slice.call(box.querySelectorAll('input[type=checkbox]'));
+  var state={};
+  try{state=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){state={};}
+  function render(){var n=inputs.filter(function(i){return i.checked}).length;out.textContent=n+(n===1?' registro':' registros')+' de '+inputs.length;}
+  inputs.forEach(function(i){ if(state[i.id]) i.checked=true; i.addEventListener('change',function(){state[i.id]=i.checked;try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){} render();});});
+  document.getElementById('reset').addEventListener('click',function(){inputs.forEach(function(i){i.checked=false});state={};try{localStorage.removeItem(KEY);}catch(e){} render();});
+  render();
+})();
+</script>
