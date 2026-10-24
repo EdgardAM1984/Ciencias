@@ -28,8 +28,28 @@ Listas temáticas del índice de `sindresorhus/awesome` que pueden ser relevante
 | GeoJSON | [awesome-geojson](https://github.com/tmcw/awesome-geojson) | Recursos sobre GeoJSON |
 | Tierra y clima | [awesome-earth](https://github.com/philsturgeon/awesome-earth) | Recursos para enfrentar la crisis climática |
 | Ciencia de datos | [awesome-datascience](https://github.com/academic/awesome-datascience) | Ciencia de datos y aprendizaje automático |
+## Repositorios agregados (24 de octubre de 2026)
+
+Seleccionados para cubrir lo que faltaba en la lista: análisis de microbioma de suelo (para validar bioinsumos), biodiversidad predial y corredores, y balance hídrico (para BioMulch). Se revisó el README de cada uno y la fecha de su último commit; no se ejecutó ni probó el código.
+
+| # | Repositorio | Tipo | Qué es | Utilidad para el trabajo | Observaciones |
+|---|-------------|------|--------|--------------------------|---------------|
+| 7 | [benjjneb/dada2](https://github.com/benjjneb/dada2) | Paquete R (Bioconductor) | Inferencia exacta de variantes (ASV) desde secuenciación de amplicones 16S/ITS. | Procesar las lecturas de muestras de suelo y rizósfera antes y después de aplicar un bioinsumo; verificar si la cepa inoculada se establece. | Estándar en la literatura. Último commit: julio de 2026. |
+| 8 | [qiime2/qiime2](https://github.com/qiime2/qiime2) | Plataforma | Marco para análisis de microbioma por amplicones (QIIME 2, ahora llamado "rachis"). | Flujo completo: calidad, taxonomía, diversidad alfa y beta, gráficos. Alternativa en Python/línea de comandos a dada2 + phyloseq. | El proyecto está migrando su nombre y sitio a rachis.org. |
+| 9 | [joey711/phyloseq](https://github.com/joey711/phyloseq) | Paquete R | Manejo, análisis y gráficos de datos de comunidades microbianas (tablas de ASV, taxonomía, metadatos). | Comparar tratamientos de ensayos de campo (testigo vs. bioinsumo) con gráficos listos para informes y propuestas. | Actualizaciones poco frecuentes (último commit: febrero de 2026), pero muy usado. |
+| 10 | [picrust/picrust2](https://github.com/picrust/picrust2) | Herramienta | Predice funciones metabólicas de una comunidad a partir de datos 16S. | Estimar cambios en funciones del suelo (ciclo de N, P, etc.) sin pagar metagenómica completa. | Es una predicción, no una medición; conviene validarla con ensayos enzimáticos. |
+| 11 | [UMNFuN/FUNGuild](https://github.com/UMNFuN/FUNGuild) | Script y base de datos | Asigna gremios ecológicos a hongos (patógenos, saprótrofos, micorrícicos) desde tablas de taxonomía. | Seguir la proporción de hongos patógenos vs. benéficos en ensayos con Trichoderma o en evaluaciones de salud de suelo. | Sin actualizaciones desde diciembre de 2023. |
+| 12 | [vegandevs/vegan](https://github.com/vegandevs/vegan) | Paquete R | Índices de diversidad, ordenación (NMDS, PCA, RDA) y pruebas estadísticas (PERMANOVA) para ecología de comunidades. | Evaluaciones de biodiversidad predial (flora, artrópodos, aves) y comparación de corredores biológicos vs. zonas sin intervención. | Muy activo (último commit: octubre de 2026). |
+| 13 | [scikit-bio/scikit-bio](https://github.com/scikit-bio/scikit-bio) | Paquete Python | Estructuras de datos y algoritmos de bioinformática, incluidos índices de diversidad y distancias. | Equivalente en Python a parte de vegan, útil para automatizar informes de biodiversidad. | Licencia BSD. Muy activo. |
+| 14 | [pyinat/pyinaturalist](https://github.com/pyinat/pyinaturalist) | Paquete Python | Cliente de la API de iNaturalist. | Descargar observaciones de especies nativas cerca de un predio para armar listas de especies esperadas y elegir flora para corredores. | Los datos de ciencia ciudadana tienen sesgos de muestreo (caminos, ciudades). |
+| 15 | [gbif/pygbif](https://github.com/gbif/pygbif) | Paquete Python | Cliente de la API de GBIF (registros de ocurrencia de especies). | Complementa iNaturalist con datos de herbarios, museos e inventarios; útil para respaldar la línea base de biodiversidad en propuestas. | Equivalente en R: [ropensci/rgbif](https://github.com/ropensci/rgbif). |
+| 16 | [gee-community/geemap](https://github.com/gee-community/geemap) | Paquete Python | Análisis y visualización interactiva con Google Earth Engine. | Series de tiempo de NDVI/humedad por predio para monitorear corredores, daño por lluvias o efecto de BioMulch a escala de campo; más liviano que farmvibes-ai. | Requiere una cuenta de Google Earth Engine (gratuita para uso no comercial y de investigación). |
+| 17 | [aquacropos/aquacrop](https://github.com/aquacropos/aquacrop) | Paquete Python | Versión en Python del modelo suelo-cultivo-agua AquaCrop (FAO). | Simular cuánta agua de riego ahorraría BioMulch al cambiar la retención de agua del suelo, antes de pilotear en campo. | Requiere calibrar suelo y cultivo con datos locales. |
+
 
 ## Pendiente
 
 - Agregar los demás repositorios guardados como favoritos en GitHub.
 - Evaluar qué fuentes de datos de estos repositorios tienen cobertura en Chile.
+- Probar dada2 + phyloseq + FUNGuild con un set de muestras real de un ensayo de bioinsumo.
+- Calibrar AquaCrop para un cultivo y suelo objetivo de BioMulch.
